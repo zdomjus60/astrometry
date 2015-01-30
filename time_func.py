@@ -9,12 +9,17 @@ def dms2ddd(hour, minute, second):
 
 def ddd2dms(dec_hour):
     """ from decimal to sexagesimal representation of hours and angles."""
+    if dec_hour < 0:
+        sign = -1
+        dec_hour *= sign
+    else:
+        sign = 1
     total_seconds = int(dec_hour * 3600+.5)
-    seconds = total_seconds % 60
+    seconds = total_seconds % 60 
     total_minutes = int((total_seconds - seconds)/60)
-    minutes = total_minutes % 60
+    minutes = total_minutes % 60 
     hours = int((total_minutes - minutes)/60)
-    return (hours, minutes, seconds)
+    return (hours * sign, minutes * sign, seconds * sign)
 
 def cal2jul(year, month, day, hour=0, minute=0, second=0):
     """ converts calendar date to julian date

@@ -18,7 +18,7 @@ class Planet:
                         'Saturn':{}, 'Uranus':{}, 'Neptune':{},
                         'Pluto':{}}
        
-        self.elements[self.planet] = {
+        self.elements['Sun'] = {
                  'N' : 0.0,
                  'i' : 0.0,
                  'w' : 282.9404 + 4.70935e-5 * self.d,
@@ -91,12 +91,15 @@ class Planet:
                 'M' : 260.2471 + 0.005995147 * self.d}
 
     def position(self):
+        obl_ecl = 23.4393 - 3.563e-7 * self.d
+        N = self.elements[self.planet]['N']
+        i = self.elements[self.planet]['i']
+        w = self.elements[self.planet]['w']
+        a = self.elements[self.planet]['a']
+        M = self.elements[self.planet]['M']
+        e = self.elements[self.planet]['e']
+ 
         if self.planet == 'Sun':
-            obl_ecl = 23.4393 - 3.563e-7 * self.d
-            w = self.elements[self.planet]['w']
-            a = self.elements[self.planet]['a']
-            M = self.elements[self.planet]['M']
-            e = self.elements[self.planet]['e']
             L = w + M
             E = M + math.degrees(e) * sin(M) * (1.0 + e * cos(M))
             xv = cos(E) - e
@@ -114,17 +117,82 @@ class Planet:
             ze = ys * sin(obl_ecl)
             RA  = atan2(ye, xe)
             Decl = atan2(ze, math.sqrt(xe*xe+ye*ye))
-            self.elements[self.planet]['longitude'] = ddd2dms(lon)
-            self.elements[self.planet]['latitude'] = ddd2dms(lat)
-            self.elements[self.planet]['right ascension'] = ddd2dms(RA)
-            self.elements[self.planet]['declination'] = ddd2dms(Decl)
+            self.elements[self.planet]['longitude'] = lon
+            self.elements[self.planet]['latitude'] = lat
+            self.elements[self.planet]['right ascension'] = RA
+            self.elements[self.planet]['declination'] = Decl
             
             return  (self.elements[self.planet]['distance'],
                      self.elements[self.planet]['longitude'],
                      self.elements[self.planet]['latitude'],
                      self.elements[self.planet]['right ascension'],
                      self.elements[self.planet]['declination'])
-    
-                 
-                 
-    
+
+        elif self.planet == 'Moon':
+
+            E = M + math.degrees(e) * sin(M) * (1.0 + e * cos(M))
+            E0 = E
+            E1 = 0
+            while (abs(E0-E1)>.001):
+                E0 = E1
+                E1 = E0 - ( E0 - math.degrees(e)* sin(E0) - M ) / ( 1 - e * cos(E0) )
+            E = E1
+            x = a * (cos(E) - e)
+            y = a * math.sqrt(1 - e * e) * sin(E)
+            r = math.sqrt( x*x + y*y )
+            v = atan2( y, x )
+            xeclip = r * ( cos(N) * cos(v+w) - sin(N) * sin(v+w) * cos(i) )
+            yeclip = r * ( sin(N) * cos(v+w) + cos(N) * sin(v+w) * cos(i) )
+            zeclip = r * sin(v+w) * sin(i)
+            lon = atan2( yeclip, xeclip )
+            lat = atan2( zeclip, math.sqrt(xeclip*xeclip+yeclip*yeclip) )
+            # perturbations
+            Ls = self.elements['Sun']['w'] + self.elements['Sun']['M']
+            Lm = N+w+M
+            Ms = self.elements['Sun']['M']
+            Mm = M
+            D = Lm - Ls
+            F = Lm - N
+            # in longitude            
+            lon -= 1.274 * sin(Mm - 2*D)        #(Evection)
+            lon += 0.658 * sin(2*D)             #(Variation)
+            lon -= 0.186 * sin(Ms)              #(Yearly equation)
+            lon -= 0.059 * sin(2*Mm - 2*D)
+            lon -= 0.057 * sin(Mm - 2*D + Ms)
+            lon += 0.053 * sin(Mm + 2*D)
+            lon += 0.046 * sin(2*D - Ms)
+            lon += 0.041 * sin(Mm - Ms)
+            lon -= 0.035 * sin(D)               #(Parallactic equation)
+            lon -= 0.031 * sin(Mm + Ms)
+            lon -= 0.015 * sin(2*F - 2*D)
+            lon += 0.011 * sin(Mm - 4*D)
+            # in latitude
+            lat -= 0.173 * sin(F - 2*D)
+            lat -= 0.055 * sin(Mm - F - 2*D)
+            lat -= 0.046 * sin(Mm + F - 2*D)
+            lat += 0.033 * sin(F + 2*D)
+            lat += 0.017 * sin(2*Mm + F)
+            # in distance (Earth radii)
+            r -= 0.58 * cos(Mm - 2*D)
+            r -= 0.46 * cos(2*D)
+
+            self.elements[self.planet]['distance'] = r
+            self.elements[self.planet]['longitude'] = reduce360(lon)
+            self.elements[self.planet]['latitude'] = lat
+            xeclip = r * cos(lat) * cos(lon)
+            yeclip = r * cos(lat) * sin(lon)
+            zeclip = r * sin(lat)
+            xequat = xeclip
+            yequat = yeclip * cos(obl_ecl) - zeclip * sin(obl_ecl)
+            zequat = yeclip * sin(obl_ecl) + zeclip * cos(obl_ecl)
+            RA = atan2 (yequat, xequat)
+            Decl = atan2 (zequat, math.sqrt(xequat*xequat+yequat*yequat))
+            print RA, Decl
+            self.elements[self.planet]['right ascension'] = reduce360(RA)
+            self.elements[self.planet]['declination'] = Decl
+            
+            return  (self.elements[self.planet]['distance'],
+                     self.elements[self.planet]['longitude'],
+                     self.elements[self.planet]['latitude'],
+                     self.elements[self.planet]['right ascension'],
+                     self.elements[self.planet]['declination'])
