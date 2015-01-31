@@ -3,7 +3,12 @@ from time_func import *
 from trigon import *
 
 class Planet:
-
+    """ Planets position computing (planets as Astrology classifyes them:
+        Sun, Moon and solar sistem planets up to Pluto.
+        Methods taken from Paul Schlyter pages:
+        http://www.stjarnhimlen.se/comp/ppcomp.html   How to compute planetary positions
+        http://www.stjarnhimlen.se/comp/tutorial.html Computing planetary positions - a tutorial with worked examples
+    """    
     def __init__(self, planet, year, month, day, hour=0, minute=0, second=0):
         self.planet = planet
         self.d = cal2jul(year, month, day, hour, minute, second) - cal2jul(1999,12,31)
@@ -91,6 +96,19 @@ class Planet:
                 'M' : 260.2471 + 0.005995147 * self.d}
 
     def position(self):
+        """ Given the planet name ('Sun' 'Moon' 'Mercury' 'Venus' 'Mars' 'Jupiter' 'Saturn'
+            'Uranus' 'Neptune' 'Pluto'), this methods returns a tuple containing:
+            - geocentric distance (UA for all planets excepts Moon (Earth radii)
+            - longitude in degrees 
+            - latitude in degrees 
+            - right ascension in degrees
+            - declination in degrees
+            Call to this routine are made instantiating the class with the planet name and date
+            (year, month, day) and time (hour, minute, second). By default time is set to 0h0000:
+            print Planet('Saturn', 2001, 4, 1, 13, 20, 6).position()
+            The orbital elements for the given date can also be accessed as a dictionary:
+            Planet('Saturn', 2001, 4, 1, 13, 20, 6).elements['Saturn']
+        """
         obl_ecl = 23.4393 - 3.563e-7 * self.d
         N = self.elements['Sun']['N']
         i = self.elements['Sun']['i']
