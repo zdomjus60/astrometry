@@ -98,7 +98,7 @@ class Planet:
     def position(self):
         """ Given the planet name ('Sun' 'Moon' 'Mercury' 'Venus' 'Mars' 'Jupiter' 'Saturn'
             'Uranus' 'Neptune' 'Pluto'), this methods returns a tuple containing:
-            - geocentric distance - UA for all planets excepts Moon (Earth radii)
+            - geocentric distance (UA for all planets excepts Moon (Earth radii)
             - longitude in degrees 
             - latitude in degrees 
             - right ascension in degrees
@@ -146,6 +146,11 @@ class Planet:
             self.elements[self.planet]['right ascension'] = reduce360(RA)
             self.elements[self.planet]['declination'] = Decl
             
+            return  (self.elements[self.planet]['distance'],
+                     self.elements[self.planet]['longitude'],
+                     self.elements[self.planet]['latitude'],
+                     self.elements[self.planet]['right ascension'],
+                     self.elements[self.planet]['declination'])
         elif self.planet != 'Pluto':
             N = self.elements[self.planet]['N']
             i = self.elements[self.planet]['i']
@@ -239,6 +244,12 @@ class Planet:
                 self.elements[self.planet]['right ascension'] = reduce360(RA)
                 self.elements[self.planet]['declination'] = Decl
                 
+                return  (self.elements[self.planet]['distance'],
+                         self.elements[self.planet]['longitude'],
+                         self.elements[self.planet]['latitude'],
+                         self.elements[self.planet]['right ascension'],
+                         self.elements[self.planet]['declination'])
+
             elif self.planet == 'Jupiter':
                 lon -= 0.332 * sin(2*Mj - 5*Ms - 67.6)
                 lon -= 0.056 * sin(2*Mj - 2*Ms + 21)
