@@ -160,10 +160,26 @@ def moon_meeus(year, month, day, hour=0, minute =0, second=0):
               + 175 * sin(A1-F) + 175 * sin(A1+F) + 127 * sin(L1-M1)
               + 115 * sin(L1+M1))
 
-    longitude = L1 + l_add/1000000.0
-    latitude  = b_add / 1000000.0
+    mean_longitude = L1 + l_add/1000000.0
+    mean_latitude  = b_add / 1000000.0
     r = 385000.56 + r_add/1000.0
+    
+    long_asc_lunar_node = (125.04452-1934.136261*t) % 360
+    mean_long_sun = (280.4665+36000.7698*t) % 360
+    mean_long_moon = (218.3165+481267.8813*t) % 360
 
+    delta_phi = ( -17.2*sin(long_asc_lunar_node)
+                  -1.32*sin(2*mean_long_sun)
+                  -0.23*sin(2*mean_long_moon)
+                  +0.21*sin(2*long_asc_lunar_node))
+    delta_e = ( 9.2*cos(long_asc_lunar_node)
+                +0.57*cos(2*mean_long_sun)
+                +0.1*cos(2*mean_long_moon)
+                -0.09*cos(2*long_asc_lunar_node))
+
+    longitude = mean_longitude + delta_phi / 3600.0
+    latitude = mean_latitude + delta_e / 3600.0
+    
     x = r * cos(longitude) * cos(latitude)
     y = r * sin(longitude) * cos(latitude)
     z = r                  * sin(latitude)
