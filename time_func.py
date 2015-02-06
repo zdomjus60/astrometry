@@ -158,7 +158,12 @@ def lst2gst( hour, minute, second, long_degree, long_minute, long_second=0):
     lg = dms2ddd(long_degree, long_minute, long_second)/15
     GST = ddd2dms((lst + lg) % 24)
     return GST
-    
+
+def jul_millennia(year, month, day, hour=0, minute=0, second=0):
+    d1 = cal2jul(2000,1,1,12,0,0)
+    d2 = cal2jul(year, month, day, hour, minute, second)
+    return (d2-d1)/365250
+
 if __name__ == '__main__':
     dash_line = 80 * '-'
     print dash_line
