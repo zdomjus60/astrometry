@@ -66,8 +66,8 @@ def moon_meeus(year, month, day, hour=0, minute =0, second=0):
         )
     jd = cal2jul(year, month, day, hour, minute, second)
     epoch = cal2jul(2000,1,1, 12)
-    t = (jd - epoch)/36525
-    obl_ecl = (84381.448-46.815*t-0.00059*t*t+0.001813*t*t*t)/3600
+    t = (jd - epoch)/36525.0
+    obl_ecl = (84381.448-46.815*t-0.00059*t*t+0.001813*t*t*t)/3600.0
     L1 = (218.3164591
           + 481267.88134236*t
           - 0.0013268*t*t
@@ -77,7 +77,7 @@ def moon_meeus(year, month, day, hour=0, minute =0, second=0):
             445267.1115168*t
           - 0.00163*t*t
           + t*t*t/545868
-          - t*t*t*t/113065000) %360
+          - t*t*t*t/113065000) % 360
     M = (357.5291092
           + 35999.0502909*t
           - 0.0001536*t*t
@@ -194,5 +194,5 @@ def moon_meeus(year, month, day, hour=0, minute =0, second=0):
     return r, reduce360(longitude), latitude, reduce360(RA), Dec
 
 if __name__ == '__main__':
-    print moon_meeus(1992,4,12)
+    print moon_meeus(1960,6,8,19,20,0)
     

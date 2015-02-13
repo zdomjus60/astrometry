@@ -14,11 +14,11 @@ def ddd2dms(dec_hour):
         dec_hour *= sign
     else:
         sign = 1
-    total_seconds = int(dec_hour * 3600+.5)
+    total_seconds = int(dec_hour * 3600.0+.5)
     seconds = total_seconds % 60 
-    total_minutes = int((total_seconds - seconds)/60)
+    total_minutes = int((total_seconds - seconds)/60.0)
     minutes = total_minutes % 60 
-    hours = int((total_minutes - minutes)/60)
+    hours = int((total_minutes - minutes)/60.0)
     return (hours * sign, minutes * sign, seconds * sign)
 
 def cal2jul(year, month, day, hour=0, minute=0, second=0):
@@ -37,8 +37,8 @@ def cal2jul(year, month, day, hour=0, minute=0, second=0):
     else:
         pass
     if (year*10000 + month*100 + day) > 15821015:
-        a = math.trunc(year2/100)
-        b = 2 - a + math.trunc(a/4)
+        a = math.trunc(year2/100.0)
+        b = 2 - a + math.trunc(a/4.0)
     else:
         a = 0
         b = 0
