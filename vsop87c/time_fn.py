@@ -16,7 +16,7 @@ def cal2jul(year, month, day, hour=0, minute =0, second=0):
         c = int((365.25 * year2)-0.75)
     else:
         c = int(365.25 * year2)
-        d = int(30.6001 *(month2 + 1))
+    d = int(30.6001 *(month2 + 1))
     return b + c + d + day + hour / 24.0 + minute / 1440.0 + second / 86400.0 + 1720994.5
 
 def ddd2dms(dec_hour):
@@ -75,7 +75,7 @@ def obl_ecl_JPL(year, month, day, hour=0, minute = 0, second = 0):
 """
 
 
-def obl_ecl_Laskar(year, month, day, hour=0, minute = 0, second = 0):
+def obl_ecl_Laskar(year, month, day, hour = 0, minute = 0, second = 0):
     """
     // -----------------------------------------------------------
     // Compute the (t) value in Julian decamillennia corresponding
