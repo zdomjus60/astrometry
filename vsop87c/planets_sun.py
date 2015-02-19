@@ -39,17 +39,14 @@ class Planet:
                 x = body[0]-earth[0]
                 y = body[1]-earth[1]
                 z = body[2]-earth[2]
-            self.r = math.sqrt(x*x + y*y + z*z)
-            self.longitude = atan2(y,x) % 360 
-            self.latitude = atan2(z, math.sqrt(x*x + y*y))
-            obl_ecl = obl_ecl_Laskar(self.year, self.month, self.day, self.hour, self.minute, self.second)
-            f0 = sin(obl_ecl)*sin(self.longitude)*cos(self.latitude) + cos(obl_ecl)*sin(self.latitude)
-            f1 = cos(self.longitude)*cos(self.latitude)
-            f2 = cos(obl_ecl)*sin(self.longitude)*cos(self.latitude) - sin(obl_ecl)*sin(self.latitude)
-            self.RA = atan2(f2,f1) % 360
-            r0 = math.sqrt(f1*f1 + f2*f2)
-            self.Decl = atan2(f0,r0)
-           
+        self.r = math.sqrt(x*x + y*y + z*z)
+        self.longitude = atan2(y,x) % 360 
+        self.latitude = atan2(z, math.sqrt(x*x + y*y))
+        obl_ecl = obl_ecl_Laskar(self.year, self.month, self.day, self.hour, self.minute, self.second)
+        xeq = x; yeq = y * cos(obl_ecl) - z * sin(obl_ecl); zeq = y * sin(obl_ecl) + z * cos(obl_ecl) 
+        self.RA = (atan2(yeq, xeq) % 360)/15
+        self.Decl = atan2(zeq, math.sqrt(xeq*xeq + yeq*yeq))
+
         return (self.r, self.longitude, self.latitude, self.RA, self.Decl)   
         
 if __name__ == '__main__':
