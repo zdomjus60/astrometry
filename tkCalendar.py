@@ -112,9 +112,6 @@ class tkCalendar:
         hour = self.hour.get()
         minute = self.minute.get()
         self.act_time=""
-        self.act_time="{0}:{1}     JD {2}".format(
-                        str(hour).zfill(2), str(minute).zfill(2),
-                        self.cal2jul(year, month, day, hour, minute))
         # recalculate month's length in days
         if month in (1,3,5,7,8,10,12):
             self.max_days = 31
@@ -147,10 +144,10 @@ class tkCalendar:
             self.table[posx + posy * 7].config(state = NORMAL)
             if day == self.day.get():
                 self.table[posx + posy * 7].config(bg='white')
-        self.act_time = "{0}:{1}     JD {2}".format(
+                self.act_time = "{0}:{1}     JD {2}".format(
                         str(self.hour.get()).zfill(2), str(self.minute.get()).zfill(2),
                         self.cal2jul(self.year.get(), self.month.get(), self.day.get(),
-                                     self.hour.get(), self.minute.get()))
+                        self.hour.get(), self.minute.get()))
         self.time_lbl['text']=self.act_time
         
     def change_day(self, button):
