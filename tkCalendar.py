@@ -3,22 +3,22 @@
 from Tkinter import *
 
 
-class Calend:
+class tkCalendar:
     import datetime
 
     def __init__(self, master):
         "this section initializes the graphic objects"
         # main window
-        self.Calend = master
+        self.Calendar = master
         # top frame (date)
-        self.date_labels = Frame(self.Calend)
+        self.date_labels = Frame(self.Calendar)
         self.date_labels.pack(fill = BOTH, expand = 1)
         for i in ('Year', 'Month', 'Hour', 'Minute'):
             label = Label(self.date_labels, text=i, bg = 'tomato')
             label.pack(side = LEFT, fill = X, expand = 1) 
         
         self.dtime = self.datetime.datetime.now()
-        self.date = Frame(self.Calend)
+        self.date = Frame(self.Calendar)
         self.date.pack(side = 'top', fill = X, expand = 1)
         
         # spinbox for year
@@ -43,7 +43,7 @@ class Calend:
         self.spin_minute.pack(side = LEFT, fill = X, expand = 1)
         self.spin_minute.config(state = 'readonly')
         # frame for days of the week labels
-        self.dotw_labels= Frame(self.Calend)
+        self.dotw_labels= Frame(self.Calendar)
         self.dotw_labels.pack(fill = BOTH, expand = 1)
         for i in ('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'):
             label = Label(self.dotw_labels, text=i, bg = 'light green',
@@ -54,7 +54,7 @@ class Calend:
         for row in range(0,6):
             # here 6 horizontal frames are created
             # each one receives a block of 7 buttons
-            self.row = Frame(self.Calend)
+            self.row = Frame(self.Calendar)
             self.row.pack(side = TOP, fill = BOTH, expand = 1)
             for col in range(0,7):
                 button = Button(self.row,
@@ -69,23 +69,23 @@ class Calend:
                 button.config(command = lambda button = button: self.change_day(button))
                 button.pack(side = LEFT, fill = BOTH, expand = 1)
                 self.table.append(button)
-        self.time_lbl = Label(self.Calend, text='')
+        self.time_lbl = Label(self.Calendar, text='')
         self.time_lbl.pack()
 
         # some Variable Classes, when updated a callback function is activated
-        self.year = IntVar(self.Calend)
+        self.year = IntVar(self.Calendar)
         self.year.set(self.dtime.year)
         self.year.trace('w', self.check_and_reconfigure)
-        self.month = IntVar(self.Calend)
+        self.month = IntVar(self.Calendar)
         self.month.set(self.dtime.month)
         self.month.trace('w', self.check_and_reconfigure)
-        self.day = IntVar(self.Calend)
+        self.day = IntVar(self.Calendar)
         self.day.set(self.dtime.day)
         self.day.trace('w', self.check_and_reconfigure)
-        self.hour = IntVar(self.Calend)
+        self.hour = IntVar(self.Calendar)
         self.hour.set(self.dtime.hour)
         self.hour.trace('w', self.check_and_reconfigure)
-        self.minute = IntVar(self.Calend)
+        self.minute = IntVar(self.Calendar)
         self.minute.set(self.dtime.minute)
         self.minute.trace('w', self.check_and_reconfigure)
         # bottom Frame and call to functions
@@ -190,6 +190,6 @@ class Calend:
 if __name__ == '__main__':
 
     root = Tk()
-    cal  = Calend(root)
+    cal  = tkCalendar(root)
 
     root.mainloop()
