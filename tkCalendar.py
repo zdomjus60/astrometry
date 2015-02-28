@@ -136,13 +136,15 @@ class tkCalendar:
         for i in self.table:
             i.config(text = '')
             i.config(bg   = 'grey')
+            i.config(state = DISABLED)
         for day in range (1, self.month_length+1):
             dotw = self.day_of_the_week(self.year.get(), self.month.get(), day)
             posx = dotw
             if day == 1:
                 lag = posx
             posy = int((day+lag-1)/7)
-            self.table[posx + posy * 7].config(text=str(day))
+            self.table[posx + posy * 7].config(text = str(day))
+            self.table[posx + posy * 7].config(state = NORMAL)
             if day == self.day.get():
                 self.table[posx + posy * 7].config(bg='white')
         self.act_time = "{0}:{1}     JD {2}".format(
