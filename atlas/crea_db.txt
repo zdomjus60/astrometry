@@ -1,0 +1,62 @@
+SELECT datetime('now')||'Luoghi';
+DROP TABLE IF EXISTS luoghi;
+CREATE TABLE luoghi (
+   nome_unicode text, 
+   nome_ascii text, 
+   latitudine real, 
+   longitudine real, 
+   admin1 text, 
+   admin2 text, 
+   admin3 text, 
+   admin4 text, 
+   regione text, 
+   popolazione int,
+   elevazione int,
+   timezone text,
+   mod_date text);
+SELECT datetime('now')||'a1';
+DROP TABLE IF EXISTS a1;
+CREATE TABLE a1 (
+   admin1 text, 
+   admin2 text,
+   uniad1 text,
+   ascad1 text,
+   codice1 int);
+SELECT datetime('now')||'a2';
+DROP TABLE IF EXISTS a2; 
+CREATE TABLE a2 (
+   admin1 text,
+   admin2 text,
+   admin3 text,
+    uniad2 text,
+   ascad2 text,
+   codice2 int);
+SELECT datetime('now')||'a3';
+DROP TABLE IF EXISTS a3; 
+CREATE TABLE a3 (
+   country text,
+   admin1 text);
+.separator ";"
+.import all_gen.txt luoghi
+.import all_admin1.txt a1
+.import all_admin2.txt a2
+.import all_countries.txt a3
+
+SELECT datetime('now')||'loc1';
+DROP TABLE IF EXISTS loc1;
+CREATE TABLE loc1 AS SELECT * from luoghi as L
+     LEFT JOIN a1 as A on L.admin1 = A.admin1 and  L.admin2 = A.admin2;
+
+SELECT datetime('now')||'localita';
+DROP TABLE IF EXISTS localita;
+CREATE TABLE localita AS SELECT nome_ascii, nome_unicode, latitudine, longitudine, L.admin1, B.country, L.admin2, popolazione, elevazione, timezone, mod_date, uniad1, ascad1, uniad2, ascad2 from loc1 as L
+   LEFT JOIN a2 as A on L.admin1 = A.admin1 and L.admin2 = A.admin2 and L.admin3 = A.admin3
+   LEFT JOIN a3 as B on L.admin1 = B.admin1;
+SELECT datetime('now');
+   DROP TABLE luoghi;
+   DROP TABLE a1;
+   DROP TABLE a2;
+   DROP TABLE a3;
+   DROP TABLE loc1;
+
+VACUUM;
