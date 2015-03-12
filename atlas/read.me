@@ -1,0 +1,16 @@
+The scripts in this directory are aimed to convert geographical data from 
+http://download.geonames.org/export/dump/ site.
+The source file is too big to upload it here, so please download it (allCountries.zip) 
+directly from the site, unzip it and use the python scripts in the same directory following this order:
+
+1. crea_tab1.py
+2. crea_tab2.py
+3. crea_tab3.py
+4. crea_tab4.py
+
+Some new txt files are created (all_gen.txt - a huge file, roughly 30 MB size)  and some other smaller files.
+To build the sqlite db file (localita.db) you can write the following command in your shell:
+
+sqlite3 localita.db < crea_db.txt
+
+all the necessary files must be in the same directory
