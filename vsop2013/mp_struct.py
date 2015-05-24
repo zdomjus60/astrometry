@@ -80,7 +80,7 @@ class VSOP2013():
 
         # planetary frequencies in longitude
         self.freqpla = {'Mercury'   :   mpm.mpf('0.2608790314068555e5'),  
-                        'Venus'     :   mpm.mpf('01521328554743445e5'),
+                        'Venus'     :   mpm.mpf('0.1021328554743445e5'),
                         'EMB'       :   mpm.mpf('0.6283075850353215e4'),
                         'Mars'      :   mpm.mpf('0.3340612434145457e4'), 
                         'Jupiter'   :   mpm.mpf('0.5296909615623250e3'),  
