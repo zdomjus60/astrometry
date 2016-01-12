@@ -20,17 +20,19 @@ def sph_equat2rect_equat(r, RA, Declination):
     x = r * cos(Declination) * cos(RA)
     y = r * cos(Declination) * sin(RA)
     z = r * sin(Declination)
+    return (x,y,x)
 
 def rect_equat2sph_equat(x,y,z):
     r = math.sqrt(x*x + y*y +z*z)
     RA = atan2(y,x)
     Decl = atan2(z, math.sqrt(x*x + y*y))
-    return (r, RA, declination)
+    return (r, RA, Decl)
     
 def rect_ecl2equat(xeclip, yeclip, zeclip):
     xequat = xeclip
     yequat = y * cos(obl_ecl)- zeclip * sin(obl_ecl)
     zequat = yeclip * sin(obl_ecl) + zeclip * cos(obl_ecl)
+    return (xequat, yequat, zequat)
 
 if __name__ == '__main__':
     x,y,z = (sph_ecl2rect_ecl(5,60, 30))
