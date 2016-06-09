@@ -1,6 +1,5 @@
 import math
-from time_func import *
-from trigon import *
+from tools import *
 
 class Planet:
     """ Planets position computing (planets as Astrology classifyes them:

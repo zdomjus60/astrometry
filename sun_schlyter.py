@@ -1,6 +1,5 @@
 import math
-from time_func import *
-from trigon import *
+from tools import *
 class Sun:
     """
     See the following pages from Paul Schlyter:

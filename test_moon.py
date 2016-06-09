@@ -1,6 +1,6 @@
 import swisseph
 from planets import *
-from time_func import *
+from tools import *
 from moon_meeus import moon_meeus
 
 year = 1960

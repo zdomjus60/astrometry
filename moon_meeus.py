@@ -1,6 +1,6 @@
 import math
-from time_func import *
-from trigon import *
+from tools import *
+
 def moon_meeus(year, month, day, hour=0, minute =0, second=0):
     coeffs=(
         (0,0,1,0,6288774,-20905355,0,0,0,1,5128122),
