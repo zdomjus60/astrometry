@@ -1,16 +1,14 @@
-#1/usr/bin/env python
-file_in = open('allCountries.txt','r')
+#! /usr/bin/env python
+file_in = open('/mnt/sdcard1/allCountries.txt','r')
 file_out = open('all_gen.txt','w')
-elenco=file_in.readlines()
-file_in.close()
-count = 1
-for i in elenco:
-    a=i.split('\t')
-    stringa ="%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s"
-    # print a[1], a[2], a[4], a[5], a[8], a[10], a[14], a[15], a[16]
-    if int(a[14])>100:
-        # for j in (1, 2, 4, 5, 8, 10, 14, 15, 17, 18):
-        file_out.write(stringa % (a[1], a[2], a[4], a[5], a[8], a[10],
+with file_in as elenco:
+    for i in elenco:
+	a=i.split('\t')
+    	stringa ="%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s"
+    	# print a[1], a[2], a[4], a[5], a[8], a[10], a[14], a[15], a[16]
+    	if int(a[14])>100:
+        	# for j in (1, 2, 4, 5, 8, 10, 14, 15, 17, 18):
+        	file_out.write(stringa % (a[1], a[2], a[4], a[5], a[8], a[10],
                                   a[11], a[12], a[13], a[14],
                                   a[16], a[17], a[18]))
 file_out.close()
