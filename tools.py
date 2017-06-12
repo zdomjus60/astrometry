@@ -159,7 +159,7 @@ def gst2lst( hour, minute, second, long_degree, long_minute, long_second=0):
     """ Corrects GST for a different location on the Earth
     """
     GST = dms2ddd(hour,minute,second)
-    lg = dms2ddd(long_degree, long_minute, long_second)/15
+    lg = dms2ddd(long_degree, long_minute, long_second)/15.0
     lst = ddd2dms((GST + lg) % 24)
     return lst
 
@@ -167,7 +167,7 @@ def lst2gst( hour, minute, second, long_degree, long_minute, long_second=0):
     """ Inverse of the previous method
     """
     lst = dms2ddd(hour,minute,second)
-    lg = dms2ddd(long_degree, long_minute, long_second)/15
+    lg = dms2ddd(long_degree, long_minute, long_second)/15.0
     GST = ddd2dms((lst + lg) % 24)
     return GST
     
